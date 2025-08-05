@@ -114,7 +114,7 @@ def main():
             f"🔹 {contest['title']}\n"
             f"📅 Starts at: {formatted_time} IST\n"
             f"⏳ Duration: {duration}\n"
-            f"🔗 Link: {link}\n"git log --graph --decorate --oneline --all
+            f"🔗 Link: {link}\n"
         )
 
         if 11.9 <= time_diff_hours <= 12.1 and should_notify(contest_id, "12h"):
