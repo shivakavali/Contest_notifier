@@ -42,7 +42,7 @@ EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
 APP_PASSWORD = os.getenv("APP_PASSWORD")
 TIMEZONE = "Asia/Kolkata"
 
-if not (TO_EMAIL and FROM_EMAIL and APP_PASSWORD):
+if not (TO_EMAIL and EMAIL_ADDRESS and APP_PASSWORD):
     raise ValueError("Missing required email environment variables.")
 
 def fetch_upcoming_leetcode_contests():
