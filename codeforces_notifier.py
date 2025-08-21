@@ -21,6 +21,9 @@ FROM_EMAIL = os.environ["EMAIL_ADDRESS"]
 APP_PASSWORD = os.environ["APP_PASSWORD"]
 TIMEZONE = "Asia/Kolkata"
 
+if not (TO_EMAIL and FROM_EMAIL and APP_PASSWORD):
+    raise ValueError("Missing required email environment variables.")
+
 def get_codeforces_upcoming_contests():
     url = "https://codeforces.com/api/contest.list"
     response = requests.get(url)
