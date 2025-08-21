@@ -87,9 +87,17 @@ def send_email(subject, body, to_email, from_email, app_password):
 
 def load_notified_contests():
     if os.path.exists(CACHE_FILE):
-        with open(CACHE_FILE, 'r') as f:
-            return json.load(f)
+        try:
+            with open(CACHE_FILE, 'r') as f:
+                content = f.read().strip()
+                if not content:
+                    return {}
+                return json.loads(content)
+        except (json.JSONDecodeError, ValueError):
+            # If file is corrupted or not valid JSON, reset it
+            return {}
     return {}
+
 
 def save_notified_contests(data):
     os.makedirs(os.path.dirname(CACHE_FILE), exist_ok=True)
