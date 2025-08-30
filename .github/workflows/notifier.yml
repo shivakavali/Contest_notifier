@@ -3,7 +3,7 @@ name: Contest Notifier
 on:
   workflow_dispatch:  # Manual trigger
   schedule:
-    - cron: '*/30 * * * *'  # Every 30 minutes to check upcoming contests
+    - cron: '*/10 * * * *'  # Every 10 minutes to check upcoming contests
 
 jobs:
   notify:
