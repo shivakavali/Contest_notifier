@@ -17,11 +17,11 @@ CACHE_FILE = ".cache/notified_contests.json"
 load_dotenv()
 
 TO_EMAIL = os.environ["TO_EMAIL"]
-FROM_EMAIL = os.environ["EMAIL_ADDRESS"]
+EMAIL_ADDRESS = os.environ["EMAIL_ADDRESS"]
 APP_PASSWORD = os.environ["APP_PASSWORD"]
 TIMEZONE = "Asia/Kolkata"
 
-if not (TO_EMAIL and FROM_EMAIL and APP_PASSWORD):
+if not (TO_EMAIL and EMAIL_ADDRESS and APP_PASSWORD):
     raise ValueError("Missing required email environment variables.")
 
 def get_codeforces_upcoming_contests():
@@ -132,15 +132,15 @@ if __name__ == "__main__":
         now = datetime.now(pytz.timezone(TIMEZONE))
         time_diff = (start_time - now).total_seconds() / 3600  # in hours
 
-        if 11.9 <= time_diff <= 12.1 and should_notify(contest_id, "12h"):
+        if 11.5 <= time_diff <= 12.5 and should_notify(contest_id, "12h"):
             subject, body = prepare_email_content()
-            send_email(subject, body, TO_EMAIL, FROM_EMAIL, APP_PASSWORD)
+            send_email(subject, body, TO_EMAIL, EMAIL_ADDRESS, APP_PASSWORD)
             print(f"✅ 12-hour reminder sent for Codeforces contest {contest_id}")
             mark_notified(contest_id, "12h")
 
-        elif 0.2 <= time_diff <= 0.3 and should_notify(contest_id, "15min"):
+        elif 0.1 <= time_diff <= 0.5 and should_notify(contest_id, "15min"):
             subject, body = prepare_email_content()
-            send_email(subject, body, TO_EMAIL, FROM_EMAIL, APP_PASSWORD)
+            send_email(subject, body, TO_EMAIL, EMAIL_ADDRESS, APP_PASSWORD)
             print(f"✅ 15-minute reminder sent for Codeforces contest {contest_id}")
             mark_notified(contest_id, "15min")
         else:

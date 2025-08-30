@@ -105,7 +105,7 @@ def main():
         contest_id = contest["titleSlug"]
         start_utc = datetime.fromtimestamp(contest["startTime"], tz=timezone.utc)
         now = datetime.now(timezone.utc)
-        time_diff_hours = (start_utc - now).total_seconds() / 3600
+        time_diff = (start_utc - now).total_seconds() / 3600
 
         start_ist = convert_to_ist(contest["startTime"])
         duration = format_duration(contest["duration"])
@@ -120,19 +120,19 @@ def main():
             f"🔗 Link: {link}\n" 
         )
 
-        if 11.9 <= time_diff_hours <= 12.1 and should_notify(contest_id, "12h"):
+        if 11.9 <= time_diff <= 12.1 and should_notify(contest_id, "12h"):
             send_email(subject + " (12 Hour Notice)", body)
             mark_notified(contest_id, "12h")
             print(f"✅ Sent 12h reminder for {contest_id}")
 
-        elif 0.2 <= time_diff_hours <= 0.3 and should_notify(contest_id, "15min"):
+        elif 0.1 <= time_diff <= 0.5 and should_notify(contest_id, "15min"):
             send_email(subject + " (15 Minute Notice)", body)
             mark_notified(contest_id, "15min")
             print(f"✅ Sent 15min reminder for {contest_id}")
 
         else:
             print(f"⏳ No reminder to send for '{contest['title']}' ({contest_id}). "
-                  f"Time left: {round(time_diff_hours, 2)} hours")
+                  f"Time left: {round(time_diff, 2)} hours")
 
 if __name__ == "__main__":
     main()
